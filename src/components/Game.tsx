@@ -30,6 +30,10 @@ const Game: React.FC<GameProps> = ({ rows, columns }) => {
 
         setLives(newLives);
         setClicked(newClicked);
+
+        if (checkWin()) {
+            alert("You win!");
+        }
     };
 
     const createBoard = (rows: number, columns: number) => {
@@ -69,6 +73,21 @@ const Game: React.FC<GameProps> = ({ rows, columns }) => {
         setClicked(clicked);
         setRowSums(rowSums);
         setColumnSums(columnSums);
+    }
+
+    const checkWin = (): boolean => {
+        // Check that all clicked cells are used and that all unclicked cells are not used.
+        for (let i = 0; i < rows; i++) {
+            for (let j = 0; j < columns; j++) {
+                if (clicked[i][j] && !used[i][j]) {
+                    return false;
+                }
+                if (!clicked[i][j] && used[i][j]) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     const getCellColour = (row: number, column: number): "primary" | "success" | "error" => {
