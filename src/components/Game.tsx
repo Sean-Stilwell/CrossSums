@@ -1,7 +1,9 @@
 'use client';
 
 import React from 'react';
-import { Box, Button, Grid2 as Grid } from '@mui/material';
+import { Box, Button, Grid2 as Grid, Icon } from '@mui/material';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 
 interface GameProps {
     rows: number;
@@ -9,52 +11,76 @@ interface GameProps {
 }
 
 const Game: React.FC<GameProps> = ({ rows, columns }) => {
+    const [lives, setLives] = React.useState(3);
+    const [board, setBoard] = React.useState<number[][]>([]);
+    const [used, setUsed] = React.useState<boolean[][]>([]);
+    const [rowSums, setRowSums] = React.useState<number[]>([]);
+    const [columnSums, setColumnSums] = React.useState<number[]>([]);
+
     const clickCell = (row: number, column: number) => {
         console.log(`Clicked cell ${row},${column}`);
         console.log(`Cell value: ${board[row][column]}`);
         console.log(`Cell used: ${used[row][column]}`);
+        console.log(`Lives: ${lives}`);
+
+        const newLives = !used[row][column] ? lives - 1 : lives;
+        setLives(newLives);
     };
 
-    // This board is a 2D array of integers that represents the game board. It is initialized with all zeros.
-    const board = Array.from({ length: rows }).map(() => Array.from({ length: columns }).map(() => 0));
+    const createBoard = (rows: number, columns: number) => {
+        const board = Array.from({ length: rows }).map(() => Array.from({ length: columns }).map(() => 0));
+        const used = Array.from({ length: rows }).map(() => Array.from({ length: columns }).map(() => false));
+        const rowSums = Array.from({ length: rows }).map(() => 0);
+        const columnSums = Array.from({ length: columns }).map(() => 0);
 
-    // This board is a 2D array of booleans that indicates whether a cell is used in the active game. It is initialized with all false.
-    const used = Array.from({ length: rows }).map(() => Array.from({ length: columns }).map(() => false));
-
-    // These arrays store the sum of the rows and columns. They are initialized with zeros.
-    const rowSums = Array.from({ length: rows }).map(() => 0);
-    const columnSums = Array.from({ length: columns }).map(() => 0);
-
-    // Iterate over the board. 40% chance that any board is assigned a non-zero value (less than 10).
-    for (let i = 0; i < rows; i++) {
-        for (let j = 0; j < columns; j++) {
-            if (Math.random() < 0.4) {
-                // Assign a random integer between 1 and 9.
-                board[i][j] = Math.floor(Math.random() * 9) + 1;
-                used[i][j] = true;
-            }
-            else {
-                board[i][j] = Math.floor(Math.random() * 9) + 1;
-                used[i][j] = false;
+        for (let i = 0; i < rows; i++) {
+            for (let j = 0; j < columns; j++) {
+                if (Math.random() < 0.4) {
+                    board[i][j] = Math.floor(Math.random() * 9) + 1;
+                    used[i][j] = true;
+                }
+                else {
+                    board[i][j] = Math.floor(Math.random() * 9) + 1;
+                    used[i][j] = false;
+                }
             }
         }
+
+        for (let i = 0; i < rows; i++) {
+            for (let j = 0; j < columns; j++) {
+                if (!used[i][j]) {
+                    continue;
+                }
+                rowSums[i] += board[i][j];
+                columnSums[j] += board[i][j];
+            }
+        }
+
+        setBoard(board);
+        setUsed(used);
+        setRowSums(rowSums);
+        setColumnSums(columnSums);
     }
 
-    // Calculate the sum of the rows and columns.
-    for (let i = 0; i < rows; i++) {
-        for (let j = 0; j < columns; j++) {
-            if (!used[i][j]) {
-                continue;
-            }
-            rowSums[i] += board[i][j];
-            columnSums[j] += board[i][j];
-        }
-    }
+    React.useEffect(() => {
+        createBoard(rows, columns);
+    }, []);
 
     return (
         // Create the mxn grid of buttons. Each button displays the row and column index and assigned value from the board. It is enabled if the cell is used.
         // Under the columns, we display the sum of the column. To the right of the rows, we display the sum of the row.
         <Box>
+            <Box alignItems={"center"} display="flex" justifyContent="center">
+                <Icon color="primary" fontSize="large">
+                    {lives > 0 ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+                </Icon>
+                <Icon color="primary" fontSize="large">
+                    {lives > 1 ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+                </Icon>
+                <Icon color="primary" fontSize="large">
+                    {lives > 2 ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+                </Icon>
+            </Box>
             <Grid container spacing={1} display="flex" justifyContent="center" alignItems="center">
                 {board.map((row, i) => (
                     <Grid key={i}>
