@@ -1,6 +1,7 @@
 import React from 'react';
 import { AppBar, Toolbar, Typography, Container, Box, Button } from '@mui/material';
 import MuiLink from '@mui/material/Link';
+import LanguageIcon from '@mui/icons-material/Language';
 import { getDictionary } from '../i18n/dictionaries';
 
 interface FooterProps {
@@ -21,9 +22,9 @@ export default async function Footer(props: FooterProps) {
                         </Typography>
                     </Box>
                     <Box sx={{ flexGrow: 0 }}>
-                        <MuiLink href={lang === 'en' ? '/fr' : '/en'} color="inherit" underline="none">
-                            <Button color="inherit">{lang === 'en' ? 'FR' : 'EN'}</Button>
-                        </MuiLink>
+                        <Button variant="outlined" color="inherit" startIcon={<LanguageIcon />} href={lang === 'en' ? '/fr' : '/en'} >
+                            {lang === 'en' ? 'FR' : 'EN'}
+                        </Button>
                     </Box>
                 </Toolbar>
             </Container>
