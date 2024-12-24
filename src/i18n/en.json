@@ -1,8 +1,10 @@
 {
     "game":
     {
+        "newgame": "New Game",
         "title": "Cross Sums",
-        "welcome": "Welcome to Cross Sums!"
+        "welcome": "Welcome to Cross Sums!",
+        "win": "Congratulations! You have solved the puzzle!"
     },
     "footer":
     {

@@ -8,9 +8,13 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 interface GameProps {
     rows: number;
     columns: number;
+    messages: {
+        win: string;
+        newgame: string;
+    }
 }
 
-const Game: React.FC<GameProps> = ({ rows, columns }) => {
+const Game: React.FC<GameProps> = ({ rows, columns, messages }) => {
     const [lives, setLives] = React.useState(3);
     const [board, setBoard] = React.useState<number[][]>([]);
     const [used, setUsed] = React.useState<boolean[][]>([]);
@@ -27,7 +31,7 @@ const Game: React.FC<GameProps> = ({ rows, columns }) => {
         setClicked(newClicked);
 
         if (checkWin()) {
-            alert("You win!");
+            alert(messages.win);
         }
     };
 
@@ -142,7 +146,7 @@ const Game: React.FC<GameProps> = ({ rows, columns }) => {
                 </Grid>
             </Grid>
             <Box alignItems={"center"} display="flex" justifyContent="center" marginTop={2}>
-                <Button variant="contained" onClick={() => createBoard(5,5)}>New Game</Button>
+                <Button variant="contained" onClick={() => createBoard(rows, columns)}>{messages.newgame}</Button>
             </Box>
         </Box>
     );

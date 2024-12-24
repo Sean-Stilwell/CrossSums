@@ -1,8 +1,10 @@
 {
     "game":
     {
+        "newgame": "Nouveau jeu",
         "title": "Sommes croisées",
-        "welcome": "Bienvenue à Sommes croisées!"
+        "welcome": "Bienvenue à Sommes croisées!",
+        "win": "Félicitations! Vous avez résolu le puzzle!"
     },
     "footer":
     {
