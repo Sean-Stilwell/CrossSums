@@ -1,6 +1,7 @@
 {
     "game":
     {
+        "title": "Cross Sums",
         "welcome": "Welcome to Cross Sums!"
     },
     "footer":
