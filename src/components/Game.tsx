@@ -14,6 +14,7 @@ const Game: React.FC<GameProps> = ({ rows, columns }) => {
     const [lives, setLives] = React.useState(3);
     const [board, setBoard] = React.useState<number[][]>([]);
     const [used, setUsed] = React.useState<boolean[][]>([]);
+    const [clicked, setClicked] = React.useState<boolean[][]>([]);
     const [rowSums, setRowSums] = React.useState<number[]>([]);
     const [columnSums, setColumnSums] = React.useState<number[]>([]);
 
@@ -24,15 +25,21 @@ const Game: React.FC<GameProps> = ({ rows, columns }) => {
         console.log(`Lives: ${lives}`);
 
         const newLives = !used[row][column] ? lives - 1 : lives;
+        const newClicked = [...clicked];
+        newClicked[row][column] = true;
+
         setLives(newLives);
+        setClicked(newClicked);
     };
 
     const createBoard = (rows: number, columns: number) => {
         const board = Array.from({ length: rows }).map(() => Array.from({ length: columns }).map(() => 0));
         const used = Array.from({ length: rows }).map(() => Array.from({ length: columns }).map(() => false));
+        const clicked = Array.from({ length: rows }).map(() => Array.from({ length: columns }).map(() => false));
         const rowSums = Array.from({ length: rows }).map(() => 0);
         const columnSums = Array.from({ length: columns }).map(() => 0);
 
+        // Randomly assign values to the board. 40% of the cells are used.
         for (let i = 0; i < rows; i++) {
             for (let j = 0; j < columns; j++) {
                 if (Math.random() < 0.4) {
@@ -46,6 +53,7 @@ const Game: React.FC<GameProps> = ({ rows, columns }) => {
             }
         }
 
+        // Calculate the row and column sums.
         for (let i = 0; i < rows; i++) {
             for (let j = 0; j < columns; j++) {
                 if (!used[i][j]) {
@@ -58,8 +66,16 @@ const Game: React.FC<GameProps> = ({ rows, columns }) => {
 
         setBoard(board);
         setUsed(used);
+        setClicked(clicked);
         setRowSums(rowSums);
         setColumnSums(columnSums);
+    }
+
+    const getCellColour = (row: number, column: number): "primary" | "success" | "error" => {
+        if (clicked[row][column]) {
+            return used[row][column] ? "success" : "error";
+        }
+        return "primary";
     }
 
     React.useEffect(() => {
@@ -87,8 +103,8 @@ const Game: React.FC<GameProps> = ({ rows, columns }) => {
                         <Grid container spacing={1} display="flex" justifyContent="center" alignItems="center">
                             {row.map((value, j) => (
                                 <Grid key={j}>
-                                    <Button variant="contained" color="primary" onClick={() => clickCell(i, j)}>
-                                        {i},{j} {value}
+                                    <Button variant="contained" color={getCellColour(i, j)} onClick={() => clickCell(i, j)}>
+                                        {value}
                                     </Button>
                                 </Grid>
                             ))}
