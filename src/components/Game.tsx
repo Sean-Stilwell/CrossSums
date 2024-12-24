@@ -19,11 +19,6 @@ const Game: React.FC<GameProps> = ({ rows, columns }) => {
     const [columnSums, setColumnSums] = React.useState<number[]>([]);
 
     const clickCell = (row: number, column: number) => {
-        console.log(`Clicked cell ${row},${column}`);
-        console.log(`Cell value: ${board[row][column]}`);
-        console.log(`Cell used: ${used[row][column]}`);
-        console.log(`Lives: ${lives}`);
-
         const newLives = !used[row][column] ? lives - 1 : lives;
         const newClicked = [...clicked];
         newClicked[row][column] = true;
@@ -68,6 +63,7 @@ const Game: React.FC<GameProps> = ({ rows, columns }) => {
             }
         }
 
+        setLives(3);
         setBoard(board);
         setUsed(used);
         setClicked(clicked);
@@ -76,12 +72,9 @@ const Game: React.FC<GameProps> = ({ rows, columns }) => {
     }
 
     const checkWin = (): boolean => {
-        // Check that all clicked cells are used and that all unclicked cells are not used.
         for (let i = 0; i < rows; i++) {
             for (let j = 0; j < columns; j++) {
-                if (clicked[i][j] && !used[i][j]) {
-                    return false;
-                }
+                // Verify that all used cells have been clicked.
                 if (!clicked[i][j] && used[i][j]) {
                     return false;
                 }
@@ -116,7 +109,7 @@ const Game: React.FC<GameProps> = ({ rows, columns }) => {
                     {lives > 2 ? <FavoriteIcon /> : <FavoriteBorderIcon />}
                 </Icon>
             </Box>
-            <Grid container spacing={1} display="flex" justifyContent="center" alignItems="center">
+            <Grid container spacing={1} display="flex" justifyContent="center" alignItems="center" marginTop={2}>
                 {board.map((row, i) => (
                     <Grid key={i}>
                         <Grid container spacing={1} display="flex" justifyContent="center" alignItems="center">
@@ -148,6 +141,9 @@ const Game: React.FC<GameProps> = ({ rows, columns }) => {
                     <Button variant="text" color="primary" disabled />
                 </Grid>
             </Grid>
+            <Box alignItems={"center"} display="flex" justifyContent="center" marginTop={2}>
+                <Button variant="contained" onClick={() => createBoard(5,5)}>New Game</Button>
+            </Box>
         </Box>
     );
 };
