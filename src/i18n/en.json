@@ -1,0 +1,10 @@
+{
+    "game":
+    {
+        "welcome": "Welcome to Cross Sums!"
+    },
+    "footer":
+    {
+        "message": "Developed by "
+    }
+}
