@@ -1,9 +1,8 @@
 'use client';
 
 import React from 'react';
-import { Box, Button, Grid2 as Grid, Icon } from '@mui/material';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import { Box, Button, Grid2 as Grid } from '@mui/material';
+import LivesDisplay from './LivesDisplay';
 
 interface GameProps {
     rows: number;
@@ -110,17 +109,7 @@ const Game: React.FC<GameProps> = ({ rows, columns, messages }) => {
         // Create the mxn grid of buttons. Each button displays the row and column index and assigned value from the board. It is enabled if the cell is used.
         // Under the columns, we display the sum of the column. To the right of the rows, we display the sum of the row.
         <Box>
-            <Box alignItems={"center"} display="flex" justifyContent="center">
-                <Icon color="primary" fontSize="large">
-                    {lives > 0 ? <FavoriteIcon /> : <FavoriteBorderIcon />}
-                </Icon>
-                <Icon color="primary" fontSize="large">
-                    {lives > 1 ? <FavoriteIcon /> : <FavoriteBorderIcon />}
-                </Icon>
-                <Icon color="primary" fontSize="large">
-                    {lives > 2 ? <FavoriteIcon /> : <FavoriteBorderIcon />}
-                </Icon>
-            </Box>
+            <LivesDisplay max_lives={MAX_LIVES} lives={lives} />
             <Grid container spacing={1} display="flex" justifyContent="center" alignItems="center" marginTop={2}>
                 {board.map((row, i) => (
                     <Grid key={i}>
