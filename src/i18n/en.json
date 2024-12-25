@@ -15,6 +15,6 @@
     {
         "close": "Close",
         "title": "Help",
-        "content": "Cross Sums is a logic puzzle. Each row and column of the grid contain a set of numbers. Some of those numbers are used to calculate the sums displayed at the end of each row and column. The goal is to select the correct numbers to calculate those sums. Careful, if you pick the wrong cell, you will lose a life. You win when you have filled the grid with the correct numbers."
+        "content": "Cross Sums is a logic puzzle. Each row and column of the grid contain a set of numbers. Some of those numbers are used to calculate the sums displayed at the end of each row and column. The goal is to select the correct numbers to calculate those sums. If you pick the wrong cell, you will lose a life. You win when you have filled the grid with the correct numbers."
     }
 }

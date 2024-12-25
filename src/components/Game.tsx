@@ -5,6 +5,7 @@ import { Box, Button, Grid2 as Grid } from '@mui/material';
 import SyncIcon from '@mui/icons-material/Sync';
 import LivesDisplay from './LivesDisplay';
 import HelpModal from './HelpModal';
+import GameOverModal from './GameOverModal';
 
 interface GameProps {
     rows: number;
@@ -26,6 +27,8 @@ const Game: React.FC<GameProps> = ({ rows, columns, messages }) => {
     const [clicked, setClicked] = React.useState<boolean[][]>([]);
     const [rowSums, setRowSums] = React.useState<number[]>([]);
     const [columnSums, setColumnSums] = React.useState<number[]>([]);
+    const [win, setWin] = React.useState(false);
+    const [lose, setLose] = React.useState(false);
 
     const MAX_LIVES = 3;
 
@@ -38,11 +41,11 @@ const Game: React.FC<GameProps> = ({ rows, columns, messages }) => {
         setClicked(newClicked);
 
         if (checkWin()) {
-            alert(messages.win);
+            setWin(true);
             createBoard(rows, columns);
         }
         if (newLives === 0) {
-            alert(messages.lose);
+            setLose(true);
             createBoard(rows, columns);
         }
     };
@@ -85,6 +88,8 @@ const Game: React.FC<GameProps> = ({ rows, columns, messages }) => {
         setClicked(clicked);
         setRowSums(rowSums);
         setColumnSums(columnSums);
+        setWin(false);
+        setLose(false);
     }
 
     const checkWin = (): boolean => {
@@ -121,13 +126,13 @@ const Game: React.FC<GameProps> = ({ rows, columns, messages }) => {
                         <Grid container spacing={1} display="flex" justifyContent="center" alignItems="center">
                             {row.map((value, j) => (
                                 <Grid key={j}>
-                                    <Button variant="contained" color={getCellColour(i, j)} onClick={() => clickCell(i, j)}>
+                                    <Button variant="contained" color={getCellColour(i, j)} onClick={() => clickCell(i, j)} disabled={win || lose}>
                                         {value}
                                     </Button>
                                 </Grid>
                             ))}
                             <Grid>
-                                <Button variant="outlined" color="primary">
+                                <Button variant="outlined" color="primary"  disabled={win || lose}>
                                     {rowSums[i]}
                                 </Button>
                             </Grid>
@@ -138,7 +143,7 @@ const Game: React.FC<GameProps> = ({ rows, columns, messages }) => {
             <Grid container spacing={1} display="flex" justifyContent="center" alignItems="center" style={{ marginTop: "8px" }}>
                 {columnSums.map((value, i) => (
                     <Grid key={i}>
-                        <Button variant="outlined" color="primary">
+                        <Button variant="outlined" color="primary" disabled={win || lose}>
                             {value}
                         </Button>
                     </Grid>
@@ -148,14 +153,13 @@ const Game: React.FC<GameProps> = ({ rows, columns, messages }) => {
                 </Grid>
             </Grid>
             <Box alignItems={"center"} display="flex" justifyContent="center" marginTop={2}>
-                {/* <Button variant="contained" startIcon={<HelpIcon />}>
-                    {messages.help}
-                </Button> */}
                 <HelpModal title={messages.helptitle} content={messages.helpcontent} close={messages.close} />
                 <Button variant="contained" startIcon={<SyncIcon />} onClick={() => createBoard(rows, columns)} style={{ marginLeft: "8px" }}>
                     {messages.newgame}
                 </Button>
             </Box>
+            <GameOverModal display={win} message={messages.win} setFunc={setWin} />
+            <GameOverModal display={lose} message={messages.lose} setFunc={setLose} />
         </Box>
     );
 };
