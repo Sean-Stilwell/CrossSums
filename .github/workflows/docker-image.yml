@@ -35,8 +35,8 @@ jobs:
 
       # Build the Docker image
       - name: Build Docker image
-        run: docker build -t ghcr.io/${{ steps.normalize.outputs.repository }}/cross-sums:latest .
+        run: docker build -t ghcr.io/${{ steps.normalize.outputs.repository }}:latest .
 
       # Push the Docker image to GHCR
       - name: Push Docker image to GHCR
-        run: docker push ghcr.io/${{ steps.normalize.outputs.repository }}/cross-sums:latest
+        run: docker push ghcr.io/${{ steps.normalize.outputs.repository }}:latest
