@@ -11,6 +11,7 @@ interface GameProps {
     messages: {
         win: string;
         newgame: string;
+        lose: string;
     }
 }
 
@@ -22,6 +23,8 @@ const Game: React.FC<GameProps> = ({ rows, columns, messages }) => {
     const [rowSums, setRowSums] = React.useState<number[]>([]);
     const [columnSums, setColumnSums] = React.useState<number[]>([]);
 
+    const MAX_LIVES = 3;
+
     const clickCell = (row: number, column: number) => {
         const newLives = !used[row][column] ? lives - 1 : lives;
         const newClicked = [...clicked];
@@ -32,6 +35,11 @@ const Game: React.FC<GameProps> = ({ rows, columns, messages }) => {
 
         if (checkWin()) {
             alert(messages.win);
+            createBoard(rows, columns);
+        }
+        if (newLives === 0) {
+            alert(messages.lose);
+            createBoard(rows, columns);
         }
     };
 
@@ -67,7 +75,7 @@ const Game: React.FC<GameProps> = ({ rows, columns, messages }) => {
             }
         }
 
-        setLives(3);
+        setLives(MAX_LIVES);
         setBoard(board);
         setUsed(used);
         setClicked(clicked);

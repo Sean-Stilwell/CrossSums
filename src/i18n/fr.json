@@ -1,6 +1,7 @@
 {
     "game":
     {
+        "lose": "Désolé! Vous avez perdu le puzzle.",
         "newgame": "Nouveau jeu",
         "title": "Sommes croisées",
         "welcome": "Bienvenue à Sommes croisées!",

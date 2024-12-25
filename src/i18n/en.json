@@ -1,6 +1,7 @@
 {
     "game":
     {
+        "lose": "Sorry! You have lost the puzzle.",
         "newgame": "New Game",
         "title": "Cross Sums",
         "welcome": "Welcome to Cross Sums!",
