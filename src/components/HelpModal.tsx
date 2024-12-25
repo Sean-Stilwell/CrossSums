@@ -1,13 +1,9 @@
 import * as React from 'react';
 import Button from '@mui/material/Button';
 import HelpIcon from '@mui/icons-material/Help';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import Slide from '@mui/material/Slide';
-import { TransitionProps } from '@mui/material/transitions';
+import Modal from '@mui/material/Modal';
+import Typography from '@mui/material/Typography';
+import { Paper } from '@mui/material';
 
 interface HelpModalProps {
     title: string;
@@ -15,14 +11,16 @@ interface HelpModalProps {
     close: string;
 }
 
-const Transition = React.forwardRef(function Transition(
-  props: TransitionProps & {
-    children: React.ReactElement;
-  },
-  ref: React.Ref<unknown>,
-) {
-  return <Slide direction="up" ref={ref} {...props} />;
-});
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 500,
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
+};
 
 export default function AlertDialogSlide(props: HelpModalProps) {
   const [open, setOpen] = React.useState(false);
@@ -36,27 +34,20 @@ export default function AlertDialogSlide(props: HelpModalProps) {
   };
 
   return (
-    <React.Fragment>
+    <span>
       <Button variant="contained" startIcon={<HelpIcon />} onClick={handleClickOpen}>
         {props.title}
       </Button>
-      <Dialog
-        open={open}
-        TransitionComponent={Transition}
-        keepMounted
-        onClose={handleClose}
-        aria-describedby="alert-dialog-slide-description"
-      >
-        <DialogTitle>{props.title}</DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-slide-description">
+      <Modal open={open} onClose={handleClose} >
+        <Paper sx={style}>
+          <Typography variant="h6" component="h2" id="modal-modal-title">
+            {props.title}
+          </Typography>
+          <Typography id="modal-modal-description">
             {props.content}
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose}>{props.close}</Button>
-        </DialogActions>
-      </Dialog>
-    </React.Fragment>
+          </Typography >
+        </Paper>
+      </Modal>
+    </span>
   );
 }
