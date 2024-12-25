@@ -17,6 +17,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      # Normalize the repository name to lowercase
+      - name: Normalize repository name
+        id: normalize
+        run: echo "::set-output name=repository::${GITHUB_REPOSITORY,,}"
+
       # Log in to GitHub Container Registry
       - name: Log in to GHCR
         uses: docker/login-action@v2
@@ -27,10 +32,8 @@ jobs:
 
       # Build the Docker image
       - name: Build Docker image
-        run: |
-          docker build -t ghcr.io/${{ github.repository }}/cross-sums:latest .
+        run: docker build -t ghcr.io/${{ steps.normalize.outputs.repository }}/cross-sums:latest .
 
       # Push the Docker image to GHCR
       - name: Push Docker image to GHCR
-        run: |
-          docker push ghcr.io/${{ github.repository }}/cross-sums:latest
+        run: docker push ghcr.io/${{ steps.normalize.outputs.repository }}/cross-sums:latest
