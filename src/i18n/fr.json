@@ -10,5 +10,10 @@
     "footer":
     {
         "message": "Développé par "
+    },
+    "help":
+    {
+        "title": "Aide",
+        "content": "Sommes croisées est un puzzle logique qui consiste à remplir une grille avec des nombres qui satisfont des sommes données. La grille est divisée en régions, et les nombres de chaque région doivent s'additionner à la somme donnée. Les nombres de chaque région doivent être uniques. Le jeu est gagné lorsque la grille est remplie de nombres qui satisfont toutes les sommes données."
     }
 }

@@ -2,6 +2,8 @@
 
 import React from 'react';
 import { Box, Button, Grid2 as Grid } from '@mui/material';
+import HelpIcon from '@mui/icons-material/Help';
+import SyncIcon from '@mui/icons-material/Sync';
 import LivesDisplay from './LivesDisplay';
 
 interface GameProps {
@@ -11,6 +13,7 @@ interface GameProps {
         win: string;
         newgame: string;
         lose: string;
+        help: string;
     }
 }
 
@@ -143,7 +146,12 @@ const Game: React.FC<GameProps> = ({ rows, columns, messages }) => {
                 </Grid>
             </Grid>
             <Box alignItems={"center"} display="flex" justifyContent="center" marginTop={2}>
-                <Button variant="contained" onClick={() => createBoard(rows, columns)}>{messages.newgame}</Button>
+                <Button variant="contained" startIcon={<HelpIcon />}>
+                    {messages.help}
+                </Button>
+                <Button variant="contained" startIcon={<SyncIcon />} onClick={() => createBoard(rows, columns)} style={{ marginLeft: "8px" }}>
+                    {messages.newgame}
+                </Button>
             </Box>
         </Box>
     );

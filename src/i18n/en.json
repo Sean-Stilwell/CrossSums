@@ -10,5 +10,10 @@
     "footer":
     {
         "message": "Developed by "
+    },
+    "help":
+    {
+        "title": "Help",
+        "content": "Cross Sums is a logic puzzle that involves filling a grid with numbers that satisfy given sums. The grid is divided into regions, and the numbers in each region must add up to the given sum. The numbers in each region must be unique. The game is won when the grid is filled with numbers that satisfy all the given sums."
     }
 }
