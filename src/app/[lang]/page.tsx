@@ -18,3 +18,8 @@ export default async function Home(props: { params: Promise<{lang: string}> }) {
     </Container>
   );
 }
+
+export async function generateStaticParams() {
+  const languages = ['en', 'fr'];
+  return languages.map(lang => ({ lang }));
+}
