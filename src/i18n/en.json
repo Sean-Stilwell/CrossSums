@@ -5,7 +5,9 @@
         "newgame": "New Game",
         "title": "Cross Sums",
         "welcome": "Welcome to Cross Sums!",
-        "win": "Congratulations! You have solved the puzzle!"
+        "win": "Congratulations! You have solved the puzzle!",
+        "rowmessage": "The sum of this row is: ",
+        "columnmessage": "The sum of this column is: "
     },
     "footer":
     {

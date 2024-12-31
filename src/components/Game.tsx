@@ -3,6 +3,7 @@
 import React from 'react';
 import { Box, Button, Grid2 as Grid } from '@mui/material';
 import SyncIcon from '@mui/icons-material/Sync';
+import Snackbar, { SnackbarOrigin } from '@mui/material/Snackbar';
 import LivesDisplay from './LivesDisplay';
 import HelpModal from './HelpModal';
 import GameOverModal from './GameOverModal';
@@ -17,6 +18,8 @@ interface GameProps {
         helptitle: string;
         helpcontent: string;
         close: string;
+        rowmessage: string;
+        columnmessage: string;
     }
 }
 
@@ -29,6 +32,8 @@ const Game: React.FC<GameProps> = ({ rows, columns, messages }) => {
     const [columnSums, setColumnSums] = React.useState<number[]>([]);
     const [win, setWin] = React.useState(false);
     const [lose, setLose] = React.useState(false);
+    const [openSnackbar, setOpenSnackbar] = React.useState(false);
+    const [snackbarMessage, setSnackbarMessage] = React.useState("");
 
     const MAX_LIVES = 3;
 
@@ -101,6 +106,20 @@ const Game: React.FC<GameProps> = ({ rows, columns, messages }) => {
         return true;
     }
 
+    const clickRowOrColumnValue = (row: number, column: number, isRow: boolean) => {
+        if (isRow) {
+            setSnackbarMessage(`${messages.rowmessage} ${rowSums[row]}`);
+        }
+        else {
+            setSnackbarMessage(`${messages.columnmessage} ${columnSums[column]}`);
+        }
+        setOpenSnackbar(true);
+    }
+
+    const closeSnackbar = () => {
+        setOpenSnackbar(false);
+    }
+
     const getCellColour = (row: number, column: number): "primary" | "success" | "error" => {
         if (clicked[row][column]) {
             return used[row][column] ? "success" : "error";
@@ -129,7 +148,7 @@ const Game: React.FC<GameProps> = ({ rows, columns, messages }) => {
                                 </Grid>
                             ))}
                             <Grid>
-                                <Button variant="outlined" color="primary"  disabled={win || lose}>
+                                <Button variant="outlined" color="primary"  disabled={win || lose} onClick={() => clickRowOrColumnValue(i, 0, true)}>
                                     {rowSums[i]}
                                 </Button>
                             </Grid>
@@ -140,7 +159,7 @@ const Game: React.FC<GameProps> = ({ rows, columns, messages }) => {
             <Grid container spacing={1} display="flex" justifyContent="center" alignItems="center" style={{ marginTop: "8px" }}>
                 {columnSums.map((value, i) => (
                     <Grid key={i}>
-                        <Button variant="outlined" color="primary" disabled={win || lose}>
+                        <Button variant="outlined" color="primary" disabled={win || lose} onClick={() => clickRowOrColumnValue(0, i, false)}>
                             {value}
                         </Button>
                     </Grid>
@@ -157,6 +176,13 @@ const Game: React.FC<GameProps> = ({ rows, columns, messages }) => {
             </Box>
             <GameOverModal display={win} message={messages.win} setFunc={setWin} resetGame={createBoard} rows={rows} columns={columns} />
             <GameOverModal display={lose} message={messages.lose} setFunc={setLose} resetGame={createBoard} rows={rows} columns={columns} />
+            <Snackbar
+                anchorOrigin={{ vertical: 'bottom', horizontal: 'center' } as SnackbarOrigin}
+                open={openSnackbar}
+                autoHideDuration={3000}
+                onClose={closeSnackbar}
+                message={snackbarMessage}
+            />
         </Box>
     );
 };

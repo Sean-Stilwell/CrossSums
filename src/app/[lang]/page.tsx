@@ -12,7 +12,7 @@ export default async function Home(props: { params: Promise<{lang: string}> }) {
     <Container maxWidth="md">
       <Box display="flex" justifyContent="center" alignItems="center" flexDirection={'column'} minHeight="100vh">
         <Typography variant="h3" component="h1">{t.game.title}</Typography>
-        <Game rows={5} columns={5} messages={{ win: t.game.win, newgame: t.game.newgame, lose: t.game.lose, helptitle: t.help.title, helpcontent: t.help.content, close: t.help.close }} />
+        <Game rows={5} columns={5} messages={{ win: t.game.win, newgame: t.game.newgame, lose: t.game.lose, helptitle: t.help.title, helpcontent: t.help.content, close: t.help.close, rowmessage: t.game.rowmessage, columnmessage: t.game.columnmessage }} />
       </Box>
       <Footer lang={lang} />
     </Container>

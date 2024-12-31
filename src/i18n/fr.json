@@ -5,7 +5,9 @@
         "newgame": "Nouveau jeu",
         "title": "Sommes croisées",
         "welcome": "Bienvenue à Sommes croisées!",
-        "win": "Félicitations! Vous avez résolu le puzzle!"
+        "win": "Félicitations! Vous avez résolu le puzzle!",
+        "rowmessage": "La somme de cette ligne est: ",
+        "columnmessage": "La somme de cette colonne est: "
     },
     "footer":
     {
