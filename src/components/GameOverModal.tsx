@@ -7,6 +7,9 @@ interface GameOverProps {
     display: boolean;
     message: string;
     setFunc: (value: boolean) => void;
+    resetGame: (rows: number, cols: number) => void;
+    rows: number;
+    columns: number;
 }
 
 const style = {
@@ -23,6 +26,7 @@ const style = {
 export default function GameOverModal(props: GameOverProps) {
   const handleClose = () => {
     props.setFunc(false);
+    props.resetGame(props.rows, props.columns);
   };
 
   return (

@@ -42,11 +42,8 @@ const Game: React.FC<GameProps> = ({ rows, columns, messages }) => {
 
         if (checkWin()) {
             setWin(true);
-            createBoard(rows, columns);
-        }
-        if (newLives === 0) {
+        } else if (newLives === 0) {
             setLose(true);
-            createBoard(rows, columns);
         }
     };
 
@@ -158,8 +155,8 @@ const Game: React.FC<GameProps> = ({ rows, columns, messages }) => {
                     {messages.newgame}
                 </Button>
             </Box>
-            <GameOverModal display={win} message={messages.win} setFunc={setWin} />
-            <GameOverModal display={lose} message={messages.lose} setFunc={setLose} />
+            <GameOverModal display={win} message={messages.win} setFunc={setWin} resetGame={createBoard} rows={rows} columns={columns} />
+            <GameOverModal display={lose} message={messages.lose} setFunc={setLose} resetGame={createBoard} rows={rows} columns={columns} />
         </Box>
     );
 };
