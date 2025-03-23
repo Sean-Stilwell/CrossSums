@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test'
  
 test('should load the game on landing page', async ({ page }) => {
   // Start from the index page (the baseURL is set via the webServer in the playwright.config.ts)
-  await page.goto('/CrossSums/en')
+  await page.goto('/en')
   // The page should contain an h1 with "Cross Sums"
   await expect(page.locator('h1')).toContainText('Cross Sums')
   // The page should contain a button with "New Game"
@@ -13,7 +13,7 @@ test('should load the game on landing page', async ({ page }) => {
 
 test('language toggle between en => fr should work', async ({ page }) => {
   // Start from the index page (the baseURL is set via the webServer in the playwright.config.ts)
-  await page.goto('/CrossSums/en')
+  await page.goto('/en')
   // Click on the language button
   await page.click('a:text("FR")')
   // The page should contain an h1 with "Sommes croisées"
@@ -26,7 +26,7 @@ test('language toggle between en => fr should work', async ({ page }) => {
 
 test('language toggle from fr => en should work', async ({ page }) => {
   // Start from the index page (the baseURL is set via the webServer in the playwright.config.ts)
-  await page.goto('/CrossSums/fr')
+  await page.goto('/fr')
   // Click on the language button
   await page.click('a:text("EN")')
   // The page should contain an h1 with "Cross Sums"
@@ -39,7 +39,7 @@ test('language toggle from fr => en should work', async ({ page }) => {
 
 test('help modal should open and close', async ({ page }) => {
   // Start from the index page (the baseURL is set via the webServer in the playwright.config.ts)
-  await page.goto('/CrossSums/en')
+  await page.goto('/en')
   // The modal should not be visible
   await expect(page.locator('text=Cross Sums is a logic puzzle.')).not.toBeVisible()
   // Click on the help button
