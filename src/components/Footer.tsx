@@ -22,7 +22,7 @@ export default async function Footer(props: FooterProps) {
                         </Typography>
                     </Box>
                     <Box sx={{ flexGrow: 0 }}>
-                        <Button variant="outlined" color="inherit" startIcon={<LanguageIcon />} href={lang === 'en' ? '/CrossSums/fr' : '/CrossSums/en'} >
+                        <Button variant="outlined" color="inherit" startIcon={<LanguageIcon />} href={lang === 'en' ? '/fr' : '/en'} >
                             {lang === 'en' ? 'FR' : 'EN'}
                         </Button>
                     </Box>
